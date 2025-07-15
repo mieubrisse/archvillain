@@ -1,1 +1,2 @@
 - A description of this project is in the README.md
+- To bring up the container stack, use `start.sh`. To bring it down, use `stop.sh`.

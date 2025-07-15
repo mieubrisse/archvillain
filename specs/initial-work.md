@@ -23,8 +23,11 @@ The user's workflow should be:
 
 Architecture
 ------------
-- The code should be written as a Typescript React app with Node backend, created with Vite.
-- There should be a devcontainer for running the Archvillain server app
+- There should be two components: the backend server (that does all the actual Docker manipulation, runs in a container, and mounts the Docker socket) and the web server (which also runs in Docker, and talks to the backend server)
+- The backend server should be written in Go, communicating via HTTP REST
+- The frontend server should be written in Typescript & React, also commnicating via HTTP REST
+- The two should be started via Docker Compose
+- The backend server must mount the Docker socket
 - The devcontainer should mount the Docker socket from the external machine, so that the Archvillain server running in the devcontainer can manipulate Docker
 - When the user creates a new task, a new volume is created that 
 - All containers and volumes created by Archvillain should get a label called "archvillain.version" with value "1.2.3" (which is how we'll find these later)
