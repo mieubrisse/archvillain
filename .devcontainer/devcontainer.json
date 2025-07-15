@@ -1,9 +1,6 @@
 {
   "name": "Archvillain Development",
-  "build": {
-    "dockerfile": "Dockerfile",
-    "context": ".."
-  },
+  "image": "mcr.microsoft.com/devcontainers/go:1.23",
   "features": {
     "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
       "version": "latest",
@@ -15,11 +12,13 @@
   ],
   "remoteUser": "vscode",
   "postCreateCommand": "chmod +x start.sh stop.sh",
+  "forwardPorts": [8080],
   "customizations": {
     "vscode": {
       "extensions": [
         "golang.Go",
-        "ms-vscode.vscode-json"
+        "ms-vscode.vscode-json",
+        "ms-azuretools.vscode-docker"
       ]
     }
   }
