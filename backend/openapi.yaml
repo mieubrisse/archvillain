@@ -1,0 +1,87 @@
+openapi: 3.0.3
+info:
+  title: Archvillain Backend API
+  description: API for managing AI agents in safe sandboxes for task completion
+  version: 1.0.0
+  contact:
+    name: Archvillain Support
+servers:
+  - url: http://localhost:8080
+    description: Local development server
+paths:
+  /hello:
+    get:
+      summary: Health check endpoint
+      description: Returns a hello world message to verify the backend is running
+      operationId: getHello
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /launch-container:
+    post:
+      summary: Launch a Docker container
+      description: Launches a Docker container to execute a simple command and returns the output
+      operationId: launchContainer
+      responses:
+        '200':
+          description: Container launched successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContainerResponse'
+        '500':
+          description: Container launch failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContainerResponse'
+components:
+  schemas:
+    Response:
+      type: object
+      required:
+        - message
+      properties:
+        message:
+          type: string
+          description: Response message from the server
+          example: "Hello, World! Archvillain backend is running."
+    ContainerResponse:
+      type: object
+      required:
+        - container_id
+        - output
+        - status
+      properties:
+        container_id:
+          type: string
+          description: Identifier for the launched container
+          example: "docker-cli-run"
+        output:
+          type: string
+          description: Output from the container execution
+          example: "Hello World from container!"
+        status:
+          type: string
+          enum: [completed, failed]
+          description: Status of the container execution
+          example: "completed"
+    Error:
+      type: object
+      required:
+        - error
+      properties:
+        error:
+          type: string
+          description: Error message
+          example: "Internal server error"

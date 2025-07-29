@@ -13,17 +13,11 @@ import (
 	"github.com/kurtosis-tech/stacktrace"
 )
 
-type Response struct {
-	Message string `json:"message"`
-}
+// Server implements the generated ServerInterface
+type Server struct{}
 
-type ContainerResponse struct {
-	ContainerID string `json:"container_id"`
-	Output      string `json:"output"`
-	Status      string `json:"status"`
-}
-
-func helloHandler(w http.ResponseWriter, r *http.Request) {
+// GetHello implements the GET /hello endpoint
+func (s *Server) GetHello(w http.ResponseWriter, r *http.Request) {
 	response := Response{
 		Message: "Hello, World! Archvillain backend is running.",
 	}
@@ -35,7 +29,8 @@ func helloHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func launchContainerHandler(w http.ResponseWriter, r *http.Request) {
+// LaunchContainer implements the POST /launch-container endpoint
+func (s *Server) LaunchContainer(w http.ResponseWriter, r *http.Request) {
 	ctx := context.Background()
 	
 	// Use Docker CLI directly since Go SDK is having compatibility issues
@@ -44,7 +39,7 @@ func launchContainerHandler(w http.ResponseWriter, r *http.Request) {
 	
 	if err != nil {
 		response := ContainerResponse{
-			ContainerID: "unknown",
+			ContainerId: "unknown",
 			Output:      fmt.Sprintf("Error: %s\nOutput: %s", err.Error(), string(output)),
 			Status:      "failed",
 		}
@@ -56,7 +51,7 @@ func launchContainerHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	response := ContainerResponse{
-		ContainerID: "docker-cli-run",
+		ContainerId: "docker-cli-run",
 		Output:      strings.TrimSpace(string(output)),
 		Status:      "completed",
 	}
@@ -69,10 +64,11 @@ func launchContainerHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	server := &Server{}
 	r := mux.NewRouter()
 	
-	r.HandleFunc("/hello", helloHandler).Methods("GET")
-	r.HandleFunc("/launch-container", launchContainerHandler).Methods("POST")
+	// Use the generated HandlerFromMux function to register routes
+	HandlerFromMux(server, r)
 	
 	log.Println("Server starting on :8080")
 	if err := http.ListenAndServe(":8080", r); err != nil {

@@ -1,0 +1,6 @@
+# Generated files from OpenAPI spec
+generated_types.go
+generated_server.go
+
+# Binary
+main
