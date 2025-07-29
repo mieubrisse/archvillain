@@ -7,6 +7,11 @@
       "enableNonRootDocker": "true"
     }
   },
+  "containerEnv": {
+    "//": "Will be passed in by the 1Password CLI when starting VSCode",
+    "GH_TOKEN": "${localEnv:GH_TOKEN}"
+  },
+  "postCreateCommand": "gh auth setup-git --hostname github.com",
   "mounts": [
     "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind"
   ],

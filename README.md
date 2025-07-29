@@ -2,7 +2,9 @@ Archvillain: Manage Your Minions
 ================================
 Like any self-respecting evil genius, you're planning world domination.
 
-Only, world domination requires so much _stuff_: publishing on social media, booking flights, boilerplate code. What a drag.
+Only, world domination requires so much _stuff_ - publishing on social media, booking flights, boilerplate code, responding to Aunt Mary's text.
+
+What a drag. Life's not all doom lasers and fun.
 
 But wait... evil geniuses have minions! Agentic AIs to help you get back to the fun parts.
 
